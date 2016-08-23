@@ -109,3 +109,59 @@ it:
       USE_AUTHOR: Usare autore
       USE_DATE: Usare data
       USE_TAGS: Usare etichette
+
+# Français
+fr:
+  PRINTFRIENDLY_PLUGIN:
+
+    ERROR: 'ERREUR : aucune ID fournie pour la fonction <code>printfriendly()</code>'
+
+    PRINTFRIENDLY: Print Friendly
+    USE_BUILT_IN_CSS: Utiliser les CSS natifs
+    PRINT: Imprimer
+    CLOSE: Fermer
+    TITLE: Titre
+    AUTHOR: Auteur
+    DATE: Date
+    
+    JQUERYUI:
+      TITLE: JQuery UI
+      SOURCE: Source
+      SOURCE_HELP: Sélectionner la source JQuery UI entre votre propre serveur ou MaxCDN
+      MAXCDN: MaxCDN
+      OWNSERVER: Propre serveur
+      VERSION: Version
+      VERSION_HELP: Version de JQuery UI à utiliser. La version doit exister et, si elle est présente sur votre serveur, doit être chargée.
+      THEMES: Thèmes
+      THEMES_HELP: Aide Thèmes
+    
+    WINDOW:
+      TITLE: Fenêtre
+      WIDTH: Largeur
+      WIDTH_HELP: Redimensionner la largeur de la fenêtre, en pourcentage
+      NUMBER: Nombre sans le signe %
+      HEIGHT: Hauteur
+      HEIGHT_HELP: Redimensionner la hauteur de la fenêtre, en pourcentage
+
+    AWESOME:
+      TITLE: Font 
+      USE_FONT: Utiliser Font Awesome (Uniquement si votre thème ne l’utilise pas déjà)
+      LINK_LABEL: Lien icône, texte ou les deux
+      LINK_LABEL_HELP: Lien utilisant l'icône Font Awesome, le texte ou les deux.
+      ICON: Icône
+      TEXT: Texte
+      BOTH: Les deux
+      FONT_AWESOME_ICON: Icône Font Awesome
+
+    TAGS:
+      TITLE: Balises
+      ALLOWABLE_TAGS: Balises autorisées
+      ALLOWABLE_TAGS_HELP: Les balises HTML sont retirées avec la fonction strip_tags sauf pour celles précisées
+
+    METADATA:
+      TITLE: Métadonnées
+      USE_IMAGE: Utiliser la première image
+      USE_TITLE: Utiliser  le titre
+      USE_AUTHOR: Utiliser l'auteur
+      USE_DATE: Utiliser la date
+      USE_TAGS: Utiliser les balises
