@@ -1,5 +1,5 @@
 name: Print Friendly
-version: 0.1.1
+version: 0.2.1
 description: Create a web page formatted for printing.
 icon: print
 author:
@@ -44,6 +44,17 @@ form:
             built_in_css:
               type: toggle
               label: PRINTFRIENDLY_PLUGIN.USE_BUILT_IN_CSS
+              highlight: 1
+              options:
+                1: PLUGIN_ADMIN.YES
+                0: PLUGIN_ADMIN.NO
+              validate:
+                type: bool
+
+            print_directly:
+              type: toggle
+              label: PRINTFRIENDLY_PLUGIN.PRINT_DIRECTLY
+              help: PRINTFRIENDLY_PLUGIN.PRINT_DIRECTLY_HELP
               highlight: 1
               options:
                 1: PLUGIN_ADMIN.YES

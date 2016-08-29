@@ -1,4 +1,4 @@
-<a class="popup" href="#" onclick="onPrint('{{found.title}}','{{found.slug}}','{{ 'PRINTFRIENDLY_PLUGIN.PRINT'|t }}','{{ 'PRINTFRIENDLY_PLUGIN.CLOSE'|t }}','{{ width }}','{{ height }}','{{ icon }}');return false;" >
+<a class="popup" href="#" onclick="onPrint('{{found.title}}','{{found.slug}}','{{ 'PRINTFRIENDLY_PLUGIN.PRINT'|t }}','{{ 'PRINTFRIENDLY_PLUGIN.CLOSE'|t }}','{{ width }}','{{ height }}','{{ icon }}','{{ print_directly }}');return false;" >
 
     {% if config.plugins.printfriendly.link_label == "icon" or config.plugins.printfriendly.awesome.link_label == "both" %}
         <i class="fa fa-{{icon}}" aria-hidden="true"></i>&nbsp;

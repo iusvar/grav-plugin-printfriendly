@@ -116,6 +116,7 @@ class PrintFriendlyPlugin extends Plugin
         $page = $this->grav['page'];
         $found = $page->find($route);
 
+        $print_directly = $this->config->get('plugins.printfriendly.print_directly');
         $width = $this->config->get('plugins.printfriendly.window.width');
         $height = $this->config->get('plugins.printfriendly.window.height');
         $icon = $this->config->get('plugins.printfriendly.awesome.icon');
@@ -125,7 +126,8 @@ class PrintFriendlyPlugin extends Plugin
             'found' => $found,
             'width' => $width,
             'height' => $height,
-            'icon' => $icon
+            'icon' => $icon,
+            'print_directly' => $print_directly
         ];
         $html = $this->grav['twig']->processTemplate($template_file, $template_vars);
 

@@ -6,6 +6,8 @@ en:
 
     PRINTFRIENDLY: Print Friendly
     USE_BUILT_IN_CSS: Use Built in CSS
+    PRINT_DIRECTLY: Print Directly
+    PRINT_DIRECTLY_HELP: Print directly avoiding the window. In this case the library JQuery UI is not needed.
     PRINT: Print
     CLOSE: Close
     TITLE: Title
@@ -62,6 +64,8 @@ it:
 
     PRINTFRIENDLY: Print Friendly
     USE_BUILT_IN_CSS: Usa CSS interno
+    PRINT_DIRECTLY: Stampa direttamente
+    PRINT_DIRECTLY_HELP: Stampa direttamente evitando la finestra. In questo caso la libreria JQuery UI non serve.
     PRINT: Stampa
     CLOSE: Chiudi
     TITLE: Titolo
