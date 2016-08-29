@@ -2,7 +2,7 @@
 ## 08/29/2016
 
 1. [](#improved)
-    * Open directly avoiding the window
+    * Print directly avoiding the window
 
 # v0.1.1
 ## 08/23/2016
