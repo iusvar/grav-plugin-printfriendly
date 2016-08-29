@@ -68,6 +68,7 @@ The `Print Friendly` plugin comes with some sensible default configuration, that
 # Global plugin configurations.
 enabled: true               # Set to false to disable this plugin completely.
 built_in_css: true          # Use built-in CSS of the plugin.
+print_directly: true         # Print directly avoiding the window. In this case the library JQuery UI is not needed.
 
 # jQuery user interface library.
 jqueryui:
