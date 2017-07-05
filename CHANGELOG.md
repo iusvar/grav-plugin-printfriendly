@@ -1,5 +1,5 @@
 # v0.3.0
-## 07/05/2017
+## 07/06/2017
 
 1. [](#new)
     * Added Nonce features for printing
