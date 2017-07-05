@@ -1,0 +1,5 @@
+{% if snappy.json_response %}
+{% snappy.json_response|json_encode %}
+{% else %}
+{}
+{% endif %}

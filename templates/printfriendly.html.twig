@@ -1,56 +1,61 @@
-<a class="popup" href="#" onclick="onPrint('{{found.title}}','{{found.slug}}','{{ 'PRINTFRIENDLY_PLUGIN.PRINT'|t }}','{{ 'PRINTFRIENDLY_PLUGIN.CLOSE'|t }}','{{ width }}','{{ height }}','{{ icon }}','{{ print_directly }}');return false;" >
+{% set p_image  = config.plugins.printfriendly.settings.page.image %}
+{% set p_tags  = config.plugins.printfriendly.settings.page.tags %}
 
-    {% if config.plugins.printfriendly.link_label == "icon" or config.plugins.printfriendly.awesome.link_label == "both" %}
-        <i class="fa fa-{{icon}}" aria-hidden="true"></i>&nbsp;
+{% set p_bread    = config.plugins.printfriendly.settings.breadcrumbs.enabled %}
+{% set p_link     = config.plugins.printfriendly.settings.breadcrumbs.link %}
+{% set p_current  = config.plugins.printfriendly.settings.breadcrumbs.current %}
+
+{% set p_title  = config.plugins.printfriendly.settings.page.title %}
+{% set p_author = config.plugins.printfriendly.settings.page.author %}
+{% set p_date   = config.plugins.printfriendly.settings.page.date %}
+
+{% set p_date_format = config.plugins.printfriendly.settings.page.date_format %}
+{% set date_fmt = config.system.pages.dateformat.short %}
+{% if p_date_format == "long" %}
+    {% set date_fmt = config.system.pages.dateformat.long %}
+{% endif %}
+
+{% set count    = parameters.breadcrumbs|length %}
+{% set star     = 0 %}
+{% set end      = count %}
+{% if not p_current %}
+    {% set end = count -1 %}
+{% endif %}
+
+    {% if p_bread %}
+        <p class="crumbs_snappy">
+            {% for crumb in parameters.breadcrumbs|slice( start, end ) %}
+                {% if p_link %} <a href="{{base_url_absolute}}{{ crumb.route }}"> {% endif %}
+                {{ crumb.title }}
+                {% if p_link %} </a> {% endif %}
+                {% if not loop.last %} &nbsp;&gt;&nbsp; {% endif %}
+            {% endfor %}
+        </p>
     {% endif %}
 
-    {% if config.plugins.printfriendly.link_label == "text" or config.plugins.printfriendly.awesome.link_label == "both" %}
-        {{ 'PRINTFRIENDLY_PLUGIN.PRINT'|t }}
+    {% if p_tags %}
+        {% set list_tags = page.taxonomy.tag %}
+        {% if list_tags is not empty %}
+            [<b>{{ list_tags|pf_implode(", ") }}</b>]
+        {% endif %}
+    {% endif %}
+
+    {% if p_title %}<h2><center>{{ page.title }}</center></h2>{% endif %}
+
+    {% if p_image %}
+        {% set image = page.media.images|first %}
+        {% if image %}
+            {{ image.html }}
+        {% endif %}
     {% endif %}
     
-</a>
-<div id="dialogDiv-{{found.slug}}" style="display: none;">
-    <div id="printContent-{{found.slug}}">
-
-        {% if config.plugins.printfriendly.metadata.use_title %}
-            {% if found.title %}
-                <h4>{{ 'PRINTFRIENDLY_PLUGIN.TITLE'|t }}: {{found.title}}</h4>
-            {% endif %}
+    {% if p_author %}
+        {% set list_author = page.taxonomy.author %}
+        {% if list_author is not empty %}
+            <center><b>{{ list_author|pf_implode(", ") }}</b></center>
         {% endif %}
+    {% endif %}
+    
+    {% if p_date %}<center><b>{{ page.date|date(date_fmt) }}</b></center>{% endif %}
 
-        {% if config.plugins.printfriendly.metadata.use_author %}
-            {% if found.taxonomy.author %}
-                <span><h5>{{ 'PRINTFRIENDLY_PLUGIN.AUTHOR'|t }}:
-                    {% for author in found.taxonomy.author %}
-                        {{ author }}
-                    {% endfor %}
-                </h5></span>
-            {% endif %}
-        {% endif %}
-
-        {% if config.plugins.printfriendly.metadata.use_date %}
-            {% if found.date %}
-                <h6>{{ 'PRINTFRIENDLY_PLUGIN.DATE'|t }}: {{ found.date|date("m-d-Y") }}</h6>
-            {% endif %}
-        {% endif %}
-
-        {% if config.plugins.printfriendly.metadata.use_tags %}
-            {% if found.taxonomy.tag %}
-                <span><h6>{{ 'PRINTFRIENDLY_PLUGIN.TAGS'|t }}:
-                    {% for tag in found.taxonomy.tag %}
-                        {{ tag }}{% if not loop.last %},&nbsp;{% endif %}
-                    {% endfor %}
-                </h6></span>
-            {% endif %}
-        {% endif %}
-
-        {% if config.plugins.printfriendly.metadata.use_image %}
-            {% set header_image_media = found.media.images|first %}
-            {% if header_image_media %}
-                {{ header_image_media.cropZoom(600, 300).html }}
-            {% endif %}
-        {% endif %}
-
-        {{found.content}}
-    </div>
-</div>
+    {{ page.content }}

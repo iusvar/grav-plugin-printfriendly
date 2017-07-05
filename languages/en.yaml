@@ -1,0 +1,68 @@
+# English
+PLUGIN_PF:
+
+  ERROR: 'ERROR: no id provided to <b>printfriendly()</b> twig function'
+  INVALID_SECURITY_TOKEN_TITLE: "Invalid Security Token"
+  INVALID_SECURITY_TOKEN_TEXT: "Refresh page with <b>F5</b> and try again"
+
+  BASICS:
+    TITLE: Basics
+    USE_BUILT_IN_CSS: Use Built in CSS
+    BUTTON_NOTE: The plugin button can only contain an icon, a text, or both. Anyway, the <i class="fa fa-print" aria-hidden="true"></i> icon followed by the "Print" text will be entered if you leave both fields empty.
+    BTN_PLUGIN: Plugin Button Text
+    ICN_PLUGIN: Plugin Button Icon
+    PRINT_DIRECTLY: Print Directly
+    PRINT_DIRECTLY_HELP: Print directly avoiding the window. In this case the library JQuery UI is not needed.
+    
+  LIBRARIES:
+    TITLE: Libraries
+    JQUERYUI_TITLE: JQuery UI
+    JQUERYUI_SOURCE: Source
+    JQUERYUI_SOURCE_HELP: Select the source of the JQuery UI between your server or MaxCDN
+    JQUERYUI_MAXCDN: MaxCDN
+    JQUERYUI_OWNSERVER: Own Server
+    JQUERYUI_VERSION: Version
+    JQUERYUI_VERSION_HELP: JQuery UI Version to use. The version must exist and, if on your own server, be discharged.
+    JQUERYUI_THEMES: Themes
+    JQUERYUI_THEMES_HELP: Themes Help
+    AWESOME_TITLE: Awesome
+    AWESOME_NOTE: The library is required if it is not already used in your theme or other plugins.
+    AWESOME_USE_FONT: Use Font Awesome
+    AWESOME_USE_FONT_HELP: Only if your theme does not use it already
+
+  SETTINGS:
+    TITLE: Settings
+    SECTION_TITLE: Page
+    PAGE_IMAGE: Use First Image
+    PAGE_IMAGE_HELP: Use the first image if present
+    PAGE_TITLE: Use Title
+    PAGE_AUTHOR: Use Author
+    PAGE_DATE: Use Date
+    DATE_FORMAT: Date Format
+    SHORT: Short
+    LONG: Long
+    PAGE_TAGS: Use Tags
+    BREADCRUMBS: Breadcrumbs
+    BREADCRUMBS_STATUS: Status
+    BREADCRUMBS_LINK: Link
+    BREADCRUMBS_CURRENT: Current
+    BRANCH: Branch
+    BRANCH_STATUS: Status
+
+  TAGS:
+    TITLE: Tags
+    ALLOWABLE_TAGS: Allowable Tags
+    ALLOWABLE_TAGS_HELP: HTML tags are removed by the strip_tags function except for checked
+
+  WINDOW:
+    TITLE: Window
+    WIDTH: Width
+    WIDTH_HELP: Resize the width of the window as a percentage
+    NUMBER: Number without %
+    HEIGHT: Height
+    HEIGHT_HELP: Sizing the height of the window as a percentage
+    CLOSEONESCAPE: Close On Escape
+    CLOSEONESCAPE_HELP: Close On Escape
+    CLOSE_ICON: Close Icon
+    CONFIRM_BUTTON: Confirm Button Text
+    CANCEL_BUTTON: Cancel Button Text

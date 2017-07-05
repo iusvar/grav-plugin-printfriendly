@@ -1,0 +1,42 @@
+# Français
+PLUGIN_PF:
+
+  ERROR: 'ERREUR : aucune ID fournie pour la fonction <b>printfriendly()</b>'
+  
+  BASICS:
+    USE_BUILT_IN_CSS: Utiliser les CSS natifs
+    
+  LIBRARIES:
+    TITLE: Libraries
+    JQUERYUI_TITLE: JQuery UI
+    JQUERYUI_SOURCE: Source
+    JQUERYUI_SOURCE_HELP: Sélectionner la source JQuery UI entre votre propre serveur ou MaxCDN
+    JQUERYUI_MAXCDN: MaxCDN
+    JQUERYUI_OWNSERVER: Propre serveur
+    JQUERYUI_VERSION: Version
+    JQUERYUI_VERSION_HELP: Version de JQuery UI à utiliser. La version doit exister et, si elle est présente sur votre serveur, doit être chargée.
+    JQUERYUI_THEMES: Themes
+    JQUERYUI_THEMES_HELP: Aide Thèmes
+    AWESOME_TITLE: Awesome
+    AWESOME_USE_FONT: Utiliser Font Awesome
+    AWESOME_USE_FONT_HELP: Uniquement si votre thème ne l’utilise pas déjà
+
+  SETTINGS:
+    PAGE_IMAGE: Utiliser la première image
+    PAGE_TITLE: Utiliser le titre
+    PAGE_AUTHOR: Utiliser l'auteur
+    PAGE_DATE: Utiliser la date
+    PAGE_TAGS: Utiliser les balises
+
+  TAGS:
+    TITLE: Balises
+    ALLOWABLE_TAGS: Balises autorisées
+    ALLOWABLE_TAGS_HELP: Les balises HTML sont retirées avec la fonction strip_tags sauf pour celles précisées
+
+  WINDOW:
+    TITLE: Fenêtre
+    WIDTH: Largeur
+    WIDTH_HELP: Redimensionner la largeur de la fenêtre, en pourcentage
+    NUMBER: Nombre sans le signe %
+    HEIGHT: Hauteur
+    HEIGHT_HELP: Redimensionner la hauteur de la fenêtre, en pourcentage

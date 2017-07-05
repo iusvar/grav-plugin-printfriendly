@@ -24,9 +24,9 @@ form:
 
       fields:
 
-        printfriendly:
+        basics:
           type: tab
-          title: PRINTFRIENDLY_PLUGIN.PRINTFRIENDLY
+          title: PLUGIN_PF.BASICS.TITLE
 
           fields:
 
@@ -43,7 +43,7 @@ form:
 
             built_in_css:
               type: toggle
-              label: PRINTFRIENDLY_PLUGIN.USE_BUILT_IN_CSS
+              label: PLUGIN_PF.BASICS.USE_BUILT_IN_CSS
               highlight: 1
               options:
                 1: PLUGIN_ADMIN.YES
@@ -51,10 +51,36 @@ form:
               validate:
                 type: bool
 
-            print_directly:
+            basics.button:
+              type: section
+              title: Button
+              underline: false
+
+            basics.button.spacer:
+              type: spacer
+              text: PLUGIN_PF.BASICS.BUTTON_NOTE
+              
+            basics.btn_plugin:
+              type: text
+              label: PLUGIN_PF.BASICS.BTN_PLUGIN
+              size: small
+              placeholder: "eg. PrintFriendly"
+
+            basics.icn_plugin:
+              type: text
+              label: PLUGIN_PF.BASICS.ICN_PLUGIN
+              size: small
+              placeholder: "eg. fa-print"
+
+            dialog:
+              type: section
+              title: Dialog mode
+              underline: false
+
+            basics.print_directly:
               type: toggle
-              label: PRINTFRIENDLY_PLUGIN.PRINT_DIRECTLY
-              help: PRINTFRIENDLY_PLUGIN.PRINT_DIRECTLY_HELP
+              label: PLUGIN_PF.BASICS.PRINT_DIRECTLY
+              help: PLUGIN_PF.BASICS.PRINT_DIRECTLY_HELP
               highlight: 1
               options:
                 1: PLUGIN_ADMIN.YES
@@ -62,36 +88,41 @@ form:
               validate:
                 type: bool
 
-        jqueryui:
+        libraries:
           type: tab
-          title: PRINTFRIENDLY_PLUGIN.JQUERYUI.TITLE
+          title: PLUGIN_PF.LIBRARIES.TITLE
 
           fields:
 
-            jqueryui.source:
+            libraries.jqueryui:
+              type: section
+              title: PLUGIN_PF.LIBRARIES.JQUERYUI_TITLE
+              underline: false
+
+            libraries.jqueryui_source:
               type: select
-              label: PRINTFRIENDLY_PLUGIN.JQUERYUI.SOURCE
-              help: PRINTFRIENDLY_PLUGIN.JQUERYUI.SOURCE_HELP
+              label: PLUGIN_PF.LIBRARIES.JQUERYUI_SOURCE
+              help: PLUGIN_PF.LIBRARIES.JQUERYUI_SOURCE_HELP
               size: small
               default: maxcdn
               options:
-                maxcdn: PRINTFRIENDLY_PLUGIN.JQUERYUI.MAXCDN
-                ownserver: PRINTFRIENDLY_PLUGIN.JQUERYUI.OWNSERVER
+                maxcdn: PLUGIN_PF.LIBRARIES.JQUERYUI_MAXCDN
+                ownserver: PLUGIN_PF.LIBRARIES.JQUERYUI_OWNSERVER
 
-            jqueryui.version:
+            libraries.jqueryui_version:
               type: text
               size: small
-              label: PRINTFRIENDLY_PLUGIN.JQUERYUI.VERSION
-              help: PRINTFRIENDLY_PLUGIN.JQUERYUI.VERSION_HELP
+              label: PLUGIN_PF.LIBRARIES.JQUERYUI_VERSION
+              help: PLUGIN_PF.LIBRARIES.JQUERYUI_VERSION_HELP
               default: '1.12.0'
               validate:
                 type: string
               placeholder: '1.12.0'
 
-            jqueryui.themes:
+            libraries.jqueryui_themes:
               type: select
-              label: PRINTFRIENDLY_PLUGIN.JQUERYUI.THEMES
-              help: PRINTFRIENDLY_PLUGIN.JQUERYUI.THEMES_HELP
+              label: PLUGIN_PF.LIBRARIES.JQUERYUI_THEMES
+              help: PLUGIN_PF.LIBRARIES.JQUERYUI_THEMES_HELP
               size: small
               default: start
               options:
@@ -121,142 +152,219 @@ form:
                 ui-lightness: UI Lightness
                 vader: Vader
 
+            libraries.awesome:
+              type: section
+              title: PLUGIN_PF.LIBRARIES.AWESOME_TITLE
+              underline: false
+
+            libraries.awesome.spacer:
+              type: spacer
+              text: PLUGIN_PF.LIBRARIES.AWESOME_NOTE
+
+            libraries.awesome_use_font:
+              type: toggle
+              label: PLUGIN_PF.LIBRARIES.AWESOME_USE_FONT
+              help: PLUGIN_PF.LIBRARIES.AWESOME_USE_FONT_HELP
+              highlight: 0
+              default: 0
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+
+        settings:
+          type: tab
+          title: PLUGIN_PF.SETTINGS.TITLE
+
+          fields:
+
+            settings.page:
+              type: section
+              title: PLUGIN_PF.SETTINGS.SECTION_TITLE
+              underline: false
+
+            settings.page.image:
+              type: toggle
+              label: PLUGIN_PF.SETTINGS.PAGE_IMAGE
+              help: PLUGIN_PF.SETTINGS.PAGE_IMAGE_HELP
+              highlight: 1
+              default: 1
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+
+            settings.page.title:
+              type: toggle
+              label: PLUGIN_PF.SETTINGS.PAGE_TITLE
+              highlight: 1
+              default: 1
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+
+            settings.page.author:
+              type: toggle
+              label: PLUGIN_PF.SETTINGS.PAGE_AUTHOR
+              highlight: 1
+              default: 1
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+
+            settings.page.date:
+              type: toggle
+              label: PLUGIN_PF.SETTINGS.PAGE_DATE
+              highlight: 0
+              default: 0
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+
+            settings.page.date_format:
+              type: select
+              label: PLUGIN_PF.SETTINGS.DATE_FORMAT
+              size: small
+              default: short
+              options:
+                short: PLUGIN_PF.SETTINGS.SHORT
+                long: PLUGIN_PF.SETTINGS.LONG
+
+            settings.page.tags:
+              type: toggle
+              label: PLUGIN_PF.SETTINGS.PAGE_TAGS
+              highlight: 0
+              default: 0
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+
+            settings.breadcrumbs:
+              type: section
+              title: PLUGIN_PF.SETTINGS.BREADCRUMBS
+              underline: false
+              
+            settings.breadcrumbs.enabled:
+              type: toggle
+              label: PLUGIN_PF.SETTINGS.BREADCRUMBS_STATUS
+              highlight: 0
+              default: 0
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+
+            settings.breadcrumbs.link:
+              type: toggle
+              label: PLUGIN_PF.SETTINGS.BREADCRUMBS_LINK
+              highlight: 0
+              default: 0
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+
+            settings.breadcrumbs.current:
+              type: toggle
+              label: PLUGIN_PF.SETTINGS.BREADCRUMBS_CURRENT
+              highlight: 0
+              default: 0
+              options:
+                1: PLUGIN_ADMIN.ENABLED
+                0: PLUGIN_ADMIN.DISABLED
+              validate:
+                type: bool
+
+        tags:
+          type: tab
+          title: PLUGIN_PF.TAGS.TITLE
+
+          fields:
+
+            tags.allowed_tags:
+              type: array
+              label: PLUGIN_PF.TAGS.ALLOWABLE_TAGS
+              size: large
+              help: PLUGIN_PF.TAGS.ALLOWABLE_TAGS_HELP
+              default: ['a','b','blockquote','br','center','cite','code','div','em','h1','h2','h3','h4','h5','h6','hr','i','li','ol','p','pre','small','span','strong','sub','sup','table','tbody','td','textarea','tfoot','th','thead','tr','u','ul']
+              value_only: true
+              placeholder_value: "e.g. tag without <>"
+
         window:
           type: tab
-          title: PRINTFRIENDLY_PLUGIN.WINDOW.TITLE
+          title: PLUGIN_PF.WINDOW.TITLE
 
           fields:
             window.width:
               type: text
               size: x-small
               append: %
-              label: PRINTFRIENDLY_PLUGIN.WINDOW.WIDTH
-              help: PRINTFRIENDLY_PLUGIN.WINDOW.WIDTH_HELP
+              label: PLUGIN_PF.WINDOW.WIDTH
+              help: PLUGIN_PF.WINDOW.WIDTH_HELP
               default: 50
               validate:
                 type: number
-              placeholder: PRINTFRIENDLY_PLUGIN.WINDOW.NUMBER
+              placeholder: PLUGIN_PF.WINDOW.NUMBER
 
             window.height:
               type: text
               size: x-small
               append: %
-              label: PRINTFRIENDLY_PLUGIN.WINDOW.HEIGHT
-              help: PRINTFRIENDLY_PLUGIN.WINDOW.HEIGHT_HELP
+              label: PLUGIN_PF.WINDOW.HEIGHT
+              help: PLUGIN_PF.WINDOW.HEIGHT_HELP
               default: 40
               validate:
                 type: number
-              placeholder: PRINTFRIENDLY_PLUGIN.WINDOW.NUMBER
+              placeholder: PLUGIN_PF.WINDOW.NUMBER
 
-        awesome:
-          type: tab
-          title: PRINTFRIENDLY_PLUGIN.AWESOME.TITLE
-
-          fields:
-            awesome.use_font:
+            window.closeonescape:
               type: toggle
-              label: PRINTFRIENDLY_PLUGIN.AWESOME.USE_FONT
-              highlight: 0
-              default: 0
+              label: PLUGIN_PF.WINDOW.CLOSEONESCAPE
+              help: PLUGIN_PF.WINDOW.CLOSEONESCAPE_HELP
+              highlight: 1
               options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
+                1: PLUGIN_ADMIN.YES
+                0: PLUGIN_ADMIN.NO
               validate:
                 type: bool
 
-            awesome.link_label:
-              type: select
-              label: PRINTFRIENDLY_PLUGIN.AWESOME.LINK_LABEL
-              help: PRINTFRIENDLY_PLUGIN.AWESOME.LINK_LABEL_HELP
-              size: small
-              default: both
+            window.close_icon:
+              type: toggle
+              label: PLUGIN_PF.WINDOW.CLOSE_ICON
+              highlight: 0
+              default: 0
               options:
-                icon: PRINTFRIENDLY_PLUGIN.AWESOME.ICON
-                text: PRINTFRIENDLY_PLUGIN.AWESOME.TEXT
-                both: PRINTFRIENDLY_PLUGIN.AWESOME.BOTH
+                1: PLUGIN_ADMIN.YES
+                0: PLUGIN_ADMIN.NO
+              validate:
+                type: bool
 
-            awesome.icon:
+            window.confirm_button:
               type: text
               size: small
-              label: PRINTFRIENDLY_PLUGIN.AWESOME.FONT_AWESOME_ICON
-              default: print
+              label: PLUGIN_PF.WINDOW.CONFIRM_BUTTON
+              default: ''
               validate:
-                type: text
-              placeholder: 'print'
+                type: string
+              placeholder: 'eg. Print'
 
-        tags:
-          type: tab
-          title: PRINTFRIENDLY_PLUGIN.TAGS.TITLE
-
-          fields:
-
-            tags.allowed_tags:
-              type: array
-              label: PRINTFRIENDLY_PLUGIN.TAGS.ALLOWABLE_TAGS
-              size: large
-              help: PRINTFRIENDLY_PLUGIN.TAGS.ALLOWABLE_TAGS_HELP
-              default: ['a','b','blockquote','br','cite','code','div','em','h1','h2','h3','h4','h5','h6','hr','i','li','ol','p','pre','small','span','strong','sub','sup','table','tbody','td','textarea','tfoot','th','thead','tr','u','ul']
-              value_only: true
-              placeholder_value: e.g. tag without <>
-
-        metadata:
-          type: tab
-          title: PRINTFRIENDLY_PLUGIN.METADATA.TITLE
-
-          fields:
-
-            metadata.use_image:
-              type: toggle
-              label: PRINTFRIENDLY_PLUGIN.METADATA.USE_IMAGE
-              highlight: 1
-              default: 1
-              options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
+            window.cancel_button:
+              type: text
+              size: small
+              label: PLUGIN_PF.WINDOW.CANCEL_BUTTON
+              default: ''
               validate:
-                type: bool
-
-            metadata.use_title:
-              type: toggle
-              label: PRINTFRIENDLY_PLUGIN.METADATA.USE_TITLE
-              highlight: 1
-              default: 1
-              options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
-              validate:
-                type: bool
-
-            metadata.use_author:
-              type: toggle
-              label: PRINTFRIENDLY_PLUGIN.METADATA.USE_AUTHOR
-              highlight: 1
-              default: 1
-              options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
-              validate:
-                type: bool
-
-            metadata.use_date:
-              type: toggle
-              label: PRINTFRIENDLY_PLUGIN.METADATA.USE_DATE
-              highlight: 0
-              default: 0
-              options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
-              validate:
-                type: bool
-
-            metadata.use_tags:
-              type: toggle
-              label: PRINTFRIENDLY_PLUGIN.METADATA.USE_TAGS
-              highlight: 0
-              default: 0
-              options:
-                1: PLUGIN_ADMIN.ENABLED
-                0: PLUGIN_ADMIN.DISABLED
-              validate:
-                type: bool
-
+                type: string
+              placeholder: 'eg. Close'

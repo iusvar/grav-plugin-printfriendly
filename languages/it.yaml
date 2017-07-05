@@ -1,0 +1,68 @@
+# Italiano
+PLUGIN_PF:
+
+  ERROR: 'ERRORE: nessun id fornito alla funzione twig <b>PrintFriendly()</b>'
+  INVALID_SECURITY_TOKEN_TITLE: Token di sicurezza non valido
+  INVALID_SECURITY_TOKEN_TEXT: "Aggiorna la pagina con <b>F5</b> e riprova"
+
+  BASICS:
+    TITLE: Fondamentali
+    USE_BUILT_IN_CSS: Usa CSS interno
+    BUTTON_NOTE: Il pulsante del plugin può contenere un'icona, un testo o entrambi. In ogni caso, l'icona <i class="fa fa-print" aria-hidden="true"></i> seguita dal testo "Stampa" verrà inserita se sono lasciati vuoti entrambi i campi.
+    BTN_PLUGIN: Testo pulsante plugin
+    ICN_PLUGIN: Icona pulsante plugin
+    PRINT_DIRECTLY: Stampa direttamente
+    PRINT_DIRECTLY_HELP: Stampa direttamente evitando la finestra. In questo caso la libreria JQuery UI non serve.
+    
+  LIBRARIES:
+    TITLE: Librerie
+    JQUERYUI_TITLE: JQuery UI
+    JQUERYUI_SOURCE: Fonte
+    JQUERYUI_SOURCE_HELP: Selezionare la fonte di JQuery UI tra il proprio server o MaxCDN
+    JQUERYUI_MAXCDN: MaxCDN
+    JQUERYUI_OWNSERVER: Proprio server
+    JQUERYUI_VERSION: Versione
+    JQUERYUI_VERSION_HELP: Versione JQuery UI da usare. La versione deve esistere e, se sul proprio server, essere scaricata.
+    JQUERYUI_THEMES: Tema
+    JQUERYUI_THEMES_HELP: Aiuto tema
+    AWESOME_TITLE: Awesome
+    AWESOME_NOTE: La libreria è richiesta se non è già usata nel tuo tema o per altri plugin.
+    AWESOME_USE_FONT: Utilizza caratteri Awesome
+    AWESOME_USE_FONT_HELP: Solo se il tuo tema non lo usa già
+
+  SETTINGS:
+    TITLE: Impostazioni
+    SECTION_TITLE: Pagina
+    PAGE_IMAGE: Usa prima immagine
+    PAGE_IMAGE_HELP: Usa la prima immagine se presente
+    PAGE_TITLE: Usa titolo
+    PAGE_AUTHOR: Use autore
+    PAGE_DATE: Use data
+    DATE_FORMAT: Formato data
+    SHORT: Breve
+    LONG: Luongo
+    PAGE_TAGS: Usa etichette
+    BREADCRUMBS: Breadcrumbs
+    BREADCRUMBS_STATUS: Stato 
+    BREADCRUMBS_LINK: Collegamento breadcrumb
+    BREADCRUMBS_CURRENT: Attuale breadcrumb
+    BRANCH: Ramo
+    BRANCH_STATUS: Stato
+
+  TAGS:
+    TITLE: Tags
+    ALLOWABLE_TAGS: Tag HTML consentiti
+    ALLOWABLE_TAGS_HELP: Tag HTML vengono rimossi mediante la funzione strip_tags tranne quelli in elenco.
+
+  WINDOW:
+    TITLE: Finestra
+    WIDTH: Larghezza
+    WIDTH_HELP: Ridimensionare la larghezza della finestra come percentuale
+    NUMBER: Numero senza %
+    HEIGHT: Altezza
+    HEIGHT_HELP: Ridimensionare l'altezza della finestra come percentuale
+    CLOSEONESCAPE: Chiudi con Esc
+    CLOSEONESCAPE_HELP: Chiudi con Esc
+    CLOSE_ICON: Icona chiudi
+    CONFIRM_BUTTON: Testo del pulsante di conferma
+    CANCEL_BUTTON: Testo del pulsante di annullamento
