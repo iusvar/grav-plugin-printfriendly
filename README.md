@@ -52,6 +52,20 @@ Note: Any changes you have made to any of the files listed under this directory 
 
 # Usage
 
+The plugin was tested in the following updated environments:
+
+* Grav v1.3.0-rc.5
+* Admin v1.5.0-rc.4
+* Antimatter v2.1.1
+* Learn2 v1.6.3
+* Knowledge Base v1.3.3
+
+For now the `printfriendly` plugin as been tested for three types of sites:
+
+* [Blog Site](https://github.com/getgrav/grav-skeleton-blog-site) skeleton with [Antimatter](https://github.com/getgrav/grav-theme-antimatter) theme by [Grav Team](https://getgrav.org/about)
+* [RTFM Site](https://github.com/getgrav/grav-skeleton-rtfm-site) skeleton with [Learn2](https://github.com/getgrav/grav-theme-learn2) theme by [Grav Team](https://getgrav.org/about)
+* [Knowledge Base](https://github.com/Perlkonig/grav-skeleton-knowledge-base) skeleton with [Knowledge Base](https://github.com/Perlkonig/grav-theme-knowledge-base) theme by [Aaron Dalton](https://github.com/Perlkonig)
+
 To use this plugin, you simplest way to display the link to print is to use the Twig function and pass it a dynamic value such as:
 
 ```

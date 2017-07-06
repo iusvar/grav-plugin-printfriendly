@@ -19,7 +19,7 @@
     * English and Italian languages improvements
     * Deleted superflue javascript library
 1. [](#bugfix)
-    * Fix Broken internal anchors [#2](https://github.com/iusvar/grav-plugin-printfriendly/issues/2)
+    * Fix Broken internal anchors [#2](https://github.com/iusvar/grav-plugin-printfriendly/issues/2). All information to be printed is entered in a hidden input field
 
 # v0.2.1
 ## 08/29/2016
