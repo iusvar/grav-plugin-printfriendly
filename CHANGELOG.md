@@ -3,6 +3,7 @@
 
 1. [](#bugfix)
     * Deleted event onCollectionProcessed: only for debugging
+    * Fix Twig_Error_Runtime: An exception has been thrown during the rendering of a template ("Only variables should be passed by reference").[#3](https://github.com/iusvar/grav-plugin-printfriendly/issues/3)
 
 # v0.3.0
 ## 07/06/2017
