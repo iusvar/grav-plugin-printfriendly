@@ -1,3 +1,9 @@
+# v0.3.1
+## 07/06/2017
+
+1. [](#bugfix)
+    * Deleted event onCollectionProcessed: only for debugging
+
 # v0.3.0
 ## 07/06/2017
 

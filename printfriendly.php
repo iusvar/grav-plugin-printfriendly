@@ -61,7 +61,7 @@ class PrintFriendlyPlugin extends Plugin
 
         // Enable the main event we are interested in
         $this->enable([
-            'onCollectionProcessed' => ['onCollectionProcessed', 0],
+            //'onCollectionProcessed' => ['onCollectionProcessed', 0], //ONLY FOR DEBUG
             'onTwigInitialized'     => ['onTwigInitialized', 0],
             'onPageInitialized'     => ['onPageInitialized', 1001],
             'onTwigSiteVariables'   => ['onTwigSiteVariables', 0],
