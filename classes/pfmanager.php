@@ -114,8 +114,12 @@ class PFManager
     {
         $route    = $this->grav['uri']->param('route') ;
         $route = str_replace('@','/',$route);
-        $temp_slug  = explode('/', $route);
-        $slug       = end( $temp_slug );
+
+        $page       = $this->grav['page'];
+        $found      = $page->find($route);
+        $slug       = $found->slug();
+        //$temp_slug  = explode('/', $route);
+        //$slug       = end( $temp_slug );
 
         try {
             $ret_value  = $this->makeDocument($route);
@@ -146,11 +150,11 @@ class PFManager
 
     protected function makeDocument($route)
     {
-        $page = $this->grav['page'];
-        $found = $page->find( $route);
-
-        $temp_slug  = explode('/', $route);
-        $slug       = end( $temp_slug );
+        $page   = $this->grav['page'];
+        $found  = $page->find( $route);
+        $slug   = $found->slug();
+        //$temp_slug  = explode('/', $route);
+        //$slug       = end( $temp_slug );
 
         $parameters = [];
         $html = '';

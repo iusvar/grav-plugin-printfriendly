@@ -186,8 +186,8 @@ class PrintFriendlyPlugin extends Plugin
         $nonce      = Utils::getNonce('pf-form');
         $pf_nonce   = 'pf-nonce:'.$nonce;
 
-        $temp_slug  = explode('/', $route);
-        $slug       = end( $temp_slug );
+        //$temp_slug  = explode('/', $route);
+        //$slug       = end( $temp_slug );
 
         $page       = $this->grav['page'];
         $found      = $page->find($route);

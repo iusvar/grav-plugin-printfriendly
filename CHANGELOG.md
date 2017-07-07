@@ -1,8 +1,9 @@
 # v0.3.2
-## xx/xx/2017
+## 07/07/2017
 
 1. [](#bugfix)
     * Fix right version
+    * Improved slug selection. It may be the cause of the [#4](https://github.com/iusvar/grav-plugin-printfriendly/issues/4) error.
 
 # v0.3.1
 ## 07/06/2017
