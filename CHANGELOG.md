@@ -1,3 +1,9 @@
+# v0.3.2
+## xx/xx/2017
+
+1. [](#bugfix)
+    * Fix right version
+
 # v0.3.1
 ## 07/06/2017
 
