@@ -10,7 +10,7 @@ basics:
 # jQuery user interface library, Font Awesome, the iconic font and CSS framework.
 libraries:
   jqueryui_source: maxcdn       # Set source between your server or MaxCDN.
-  jqueryui_version: 1.12.0      # Set version.
+  jqueryui_version: 1.12.1      # Set version.
   jqueryui_themes: start        # Set theme for window.
   awesome_use_font: false       # Set true to use the library.
 
