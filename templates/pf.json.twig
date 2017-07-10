@@ -1,5 +1,0 @@
-{% if snappy.json_response %}
-{{ snappy.json_response|json_encode }}
-{% else %}
-{{"series: [30,70]"|jsonenconde|raw}}
-{% endif %}
