@@ -4,7 +4,7 @@ namespace Grav\Plugin;
 use Grav\Common\Plugin;
 use RocketTheme\Toolbox\Event\Event;
 use Grav\Common\Utils;
-use Grav\Plugin\PFManager\PFManager;
+use Symfony\Component\Yaml\Yaml;
 
 
 /**
@@ -17,11 +17,6 @@ class PrintFriendlyPlugin extends Plugin
     
     protected $route = "pf-manager";
     protected $uri;
-    //protected $base;
-    //protected $admin_route;
-    protected $pfmanager;
-    //protected $taskcontroller;
-    protected $json_response = [];
 
     protected $listing = array();
 
@@ -43,8 +38,6 @@ class PrintFriendlyPlugin extends Plugin
 
     public function setting()
     {
-        require_once __DIR__ . '/classes/pfmanager.php';
-        
         $this->lang = $this->grav['language'];
         $this->uri = $this->grav['uri'];
     }
@@ -61,29 +54,13 @@ class PrintFriendlyPlugin extends Plugin
 
         // Enable the main event we are interested in
         $this->enable([
-            //'onCollectionProcessed' => ['onCollectionProcessed', 0], //ONLY FOR DEBUG
             'onTwigInitialized'     => ['onTwigInitialized', 0],
-            'onPageInitialized'     => ['onPageInitialized', 1001],
             'onTwigSiteVariables'   => ['onTwigSiteVariables', 0],
             'onTwigTemplatePaths'   => ['onTwigTemplatePaths', 0]
         ]);
 
-        $this->pfmanager = new PFManager($this->grav);
-        $this->pfmanager->json_response = [];
-        $this->grav['pfmanager'] = $this->pfmanager;
     }
 
-/* FOR DEBUG
-    public function onCollectionProcessed(Event $event)
-    {
-        $collection = $event['collection'];
-        foreach ($collection as $slug => $page) {
-            $route = $page->route();
-            //$this->grav['debugger']->addMessage( $route .' - '.end(explode('/', $route)) .' - '. addcslashes($route,'/'));
-            $this->grav['debugger']->addMessage( $page );
-        }
-    }
-*/
 
     /**
      * Add current directory to Twig lookup paths.
@@ -91,23 +68,6 @@ class PrintFriendlyPlugin extends Plugin
     public function onTwigTemplatePaths()
     {
         $this->grav['twig']->twig_paths[] = __DIR__ . '/templates';
-    }
-
-
-    public function onPageInitialized()
-    {
-        $post = !empty($_POST) ? $_POST : [];
-
-        $task = !empty($post['pftask']) ? $post['pftask'] : $this->uri->param('pftask');
-
-        if ($task) {
-            $this->pfmanager->execute($task, $post);
-            if ( $this->pfmanager->json_response ) {
-                echo json_encode($this->pfmanager->json_response);
-                exit();
-            }
-        } else {
-        }
     }
 
     /**
@@ -155,13 +115,12 @@ class PrintFriendlyPlugin extends Plugin
             $this->grav['assets']->addCss($themes_source.'smoothness/jquery-ui.css');
         }
 
-        if ($this->config->get('plugins.pf2.awesome.use_font')) {
+        if ($this->config->get('plugins.printfriendly.awesome.use_font')) {
             $this->grav['assets']->addCss('plugin://printfriendly/assets/css/font-awesome.min.css');
         }
 
         $this->grav['assets']
             ->add('jquery', 101)
-            ->addJs('plugin://printfriendly/assets/js/printThis.js')
             ->addJs($jquery_ui_source.'jquery-ui.min.js');
     }
 
@@ -186,14 +145,27 @@ class PrintFriendlyPlugin extends Plugin
         $nonce      = Utils::getNonce('pf-form');
         $pf_nonce   = 'pf-nonce:'.$nonce;
 
-        //$temp_slug  = explode('/', $route);
-        //$slug       = end( $temp_slug );
-
         $page       = $this->grav['page'];
         $found      = $page->find($route);
         $id         = $found->id();
         $title      = $found->title();
+
+        $parameters = [];
+        $parameters['breadcrumbs']  = $this->get_crumbs( $found );
+        $html_from_template = $this->grav['twig']->processTemplate('printfriendly.html.twig', ['page' => $found, 'parameters' => $parameters]);
+
+        $allow_array = $this->config->get('plugins.printfriendly.tags.allowed_tags');
+        $allow = '';
+        foreach ($allow_array as $key => $value) {
+            if($value){
+                $allow .= '<'.$value.'>';
+            }
+        }
+        $stripped_html = strip_tags($html_from_template, $allow);
         
+        $html_utf8_decode = utf8_decode($stripped_html);
+        $html_base64_encode = base64_encode($html_utf8_decode);
+
         $btn_id     = "pf-".$id;
         $btn_data   = $pf_bur . $pf_manager . $pf_task . $esc_route . $pf_nonce;
 
@@ -210,7 +182,6 @@ class PrintFriendlyPlugin extends Plugin
         $btn_link .= ( !empty($btn_plugin) ? $btn_plugin : '' );
         $btn_link = trim($btn_link);
             
-        //if( empty($icn_plugin) && empty($btn_plugin) ){
         if( empty($btn_link) ){
             $icn_plugin = 'fa-print';
             $btn_link = '<i class="fa '.$icn_plugin.'" aria-hidden="true"></i>&nbsp;Print';
@@ -230,14 +201,26 @@ class PrintFriendlyPlugin extends Plugin
         if( empty($btn_confirm) ) $btn_confirm = 'Print';
         if( empty($btn_cancel) ) $btn_cancel = 'Close';
 
+        $locator = \Grav\Common\Grav::instance()['locator'];
+        $blueprints_path = $locator->findResource('plugins://printfriendly/blueprints.yaml');
+        $package_yaml = Yaml::parse(file_get_contents($blueprints_path));
+        $version = $package_yaml['version'];
 
         $html = '
-            <div id="dialog-'.$id.'" style="display: none;">
+            <div id="dialog-'.$id.'" style="display: none;" width="100%">
                 <div id="print-'.$id.'"></div>
             </div>
-            <input id="export-html" type="hidden">
-            <button id="' . $btn_id . '" class="export" type="button" data-pf="'.$btn_data.'">' . $btn_link . '</button>
+            <input id="hidden-'.$id.'" type="hidden" title="'.($version ? $version : 'Boh').'">
+            
+            <button id="' . $btn_id . '" class="printfriendly" type="button">' . $btn_link . '</button>
             <script>
+
+                function pfPrint(content){
+                    $("<iframe>", { name: "pf-frame", class: "pf-frame" }).appendTo("body").contents().find("body").append(content);
+                    window.frames["pf-frame"].focus();
+                    window.frames["pf-frame"].print();
+                    setTimeout(() => { $(".pf-frame").remove(); }, 1000);
+                };
 
                 $(document).ready(function() {
 
@@ -261,10 +244,12 @@ class PrintFriendlyPlugin extends Plugin
                                 text: "'.$btn_confirm.'",
                                 icon: "ui-icon-check",
                                 click: function() {
-                                    $("#print-'.$id.'").printThis({
-                                        appendToEl: $( this ).parents( ".ui-dialog" )
-                                    });
-                                    $( "#fa-'.$id.'" ).remove();
+
+                                    var content = $("#print-'.$id.'").html();
+                                    pfPrint(content);
+
+                                    $("#print-'.$id.'").empty();
+                                    $( "div span#fa-'.$id.'" ).remove();
                                     $(this).dialog("close");
                                 }
                             },
@@ -272,82 +257,69 @@ class PrintFriendlyPlugin extends Plugin
                                 text: "'.$btn_cancel.'",
                                 icon: "ui-icon-closethick",
                                 click: function() {
-                                    $( "#fa-'.$id.'" ).remove();
+                                    $("#print-'.$id.'").empty();
+                                    $( "div span#fa-'.$id.'" ).remove();
                                     $( this ).dialog( "close" );
                                 }
                             }
                         ],
                         open: function() {
-                            //$(".ui-dialog-content").scrollTop(0);
-
                             if( !close_icon ) {
                                 $(".ui-dialog-titlebar-close").hide();
                             }
                             $( ".ui-dialog-title" ).before( "<span id=\"fa-'.$id.'\"><i class=\"fa '.$icn_plugin.'\" aria-hidden=\"true\"></i>&nbsp;</span>" );
                             $( ".ui-dialog-title" ).css("float","none");
                             $( this ).scrollTop(0);
+                        },
+                        close: function() {
+                            //$("#print-'.$id.'").delay(100).empty();
                         }
                     });
 
+                    var html_base64_encode = "'.$html_base64_encode.'";
+                    $("#hidden-'.$id.'").val(html_base64_encode);
 
                     $("#'.$btn_id.'").on("click", function () {
+                        var encoded = $("#hidden-'.$id.'").val();
+                        var decoded = atob(encoded);
+                        $("#print-'.$id.'").html(decoded);
 
-                        //$("#pf-'.$id.' .fa-print").removeClass(\'fa-print\').addClass(\'fa-spin fa-spinner\');
-                        $("#pf-'.$id.' .'.$icn_plugin.'").removeClass(\''.$icn_plugin.'\').addClass(\'fa-spin fa-spinner\');
-                        var element = $("button#'.$btn_id.'");
-                        var url = element.attr("data-pf");
-
-                        $.ajax({
-                            url: url,
-                            dataType: "json",
-                            method: "get"
-                        }).done(function (data) {
-                            if (data.status == "success") {
-
-                                var html = ($.trim(data.html)).replace(/\s\s+/g, " ");
-                                $("#export-html").val(html);
-
-                                $("#print-'.$id.'").html(html);
-                                if( print_directly ) {
-                                    $("#print-'.$id.'").printThis({
-                                        appendToEl: $( this ).parents( ".ui-dialog" )
-                                    });
-                                } else {
-                                    $("#dialog-'.$id.'").attr("title", "Title");
-                                    $("#dialog-'.$id.'").dialog("open");
-                                }
-
-                            } else {
-                                custom_alert( data.message, data.title );
-                            }
-                        }).fail(function(jqXHR, textStatus, errorMsg){
-                            custom_alert( errorMsg, textStatus );
-                        }).always(function(){
-                            $("#pf-'.$id.' .fa-spin").removeClass(\'fa-spin fa-spinner\').addClass(\''.$icn_plugin.'\');
-                            element.prop( "disabled", false );
-                        });
-                    });
-                });
-
-                function custom_alert( message, title ) {
-                    if ( !title ) title = "Alert";
-                    if ( !message ) message = "No Message to Display.";
-                    $("<div></div>").html( message ).dialog({
-                        title: title,
-                        resizable: false,
-                        modal: true,
-                        buttons: {
-                            "Ok": function()  {
-                                $( this ).dialog( "close" );
-                            }
+                        if( print_directly ) {
+                            var content = $("#print-'.$id.'").html();
+                            pfPrint(content);
+                            $("#print-'.$id.'").empty();
+                        } else {
+                            $("#dialog-'.$id.'").dialog("open");
                         }
                     });
-                }
+                    
+                });
 
             </script>
             ';
 
         return $html;
+    }
+
+    protected function get_crumbs( $page )
+    {
+        $current = $page;
+        $hierarchy = array();
+        while ($current && !$current->root()) {
+            $hierarchy[$current->url()] = $current;
+            $current = $current->parent();
+        }
+        $home = $this->grav['pages']->dispatch('/');
+        if ($home && !array_key_exists($home->url(), $hierarchy)) {
+            $hierarchy[] = $home;
+        }
+        $elements = array_reverse($hierarchy);
+        $crumbs = array();
+        foreach ($elements as $key => $crumb) {
+            $crumbs[] = [ 'route' => $crumb->route(), 'title' => $crumb->title() ];
+        }
+
+        return $crumbs;
     }
 
 }

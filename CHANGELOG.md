@@ -1,3 +1,11 @@
+# v0.3.3
+## 07/10/2017
+
+1. [](#bugfix)
+    * Simplified procedure
+    * Eliminated Nonce features
+    * Maybe we're with [#2](https://github.com/iusvar/grav-plugin-printfriendly/issues/2) and [#4](https://github.com/iusvar/grav-plugin-printfriendly/issues/4) bugs.
+
 # v0.3.2
 ## 07/07/2017
 
