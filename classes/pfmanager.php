@@ -5,7 +5,6 @@ use Grav\Common\Grav;
 use Grav\Common\Utils;
 use RocketTheme\Toolbox\File\JsonFile;
 
-
 class PFManager
 {
     public $grav;
@@ -55,6 +54,7 @@ class PFManager
                 $this->setMessage($e->getMessage(), 'error');
             }
         }
+
         return $success;
     }
 
@@ -79,7 +79,6 @@ class PFManager
                             'status'  => 'error',
                             'message' => $message
                         ];
-
                         return false;
                     }
 
@@ -89,7 +88,6 @@ class PFManager
                         'title' => $this->lang->translate('PLUGIN_PF.INVALID_SECURITY_TOKEN_TITLE'),
                         'message' => $this->lang->translate('PLUGIN_PF.INVALID_SECURITY_TOKEN_TEXT')
                     ];
-
                     return false;
                 }
                 unset($this->post['pf-nonce']);
@@ -112,24 +110,18 @@ class PFManager
 
     protected function taskPf()
     {
-        $route    = $this->grav['uri']->param('route') ;
-        $route = str_replace('@','/',$route);
-
-        $page       = $this->grav['page'];
-        $found      = $page->find($route);
-        $slug       = $found->slug();
-        //$temp_slug  = explode('/', $route);
-        //$slug       = end( $temp_slug );
+        $route  = $this->grav['uri']->param('route') ;
+        $route  = str_replace('@','/',$route);
 
         try {
             $ret_value  = $this->makeDocument($route);
-            $filename   = $ret_value['slug'];
-            $html       = $ret_value['html'];
+            $title = $ret_value['title'];
+            $html_base64_encode = $ret_value['html_base64_encode'];
         } catch (\Exception $e) {
             $this->json_response = [
-                'status'    => 'error',
-                'title'     => 'Error 1',
-                'message'   => $this->lang->translate('PLUGIN_PF.AN_ERROR_OCCURRED') . '. ' . $e->getMessage()
+                'status' => 'error',
+                'title' => 'taskPf Error',
+                'message' => $this->lang->translate('PLUGIN_PF.AN_ERROR_OCCURRED') . '. ' . $e->getMessage()
             ];
             return true;
         }
@@ -138,10 +130,10 @@ class PFManager
         $message    = $this->lang->translate('PLUGIN_PF.YOUR_DOCUMENT_IS_READY_FOR');
 
         $this->json_response = [
-            'status'    => 'success',
-            'message'   => $message,
-            'slug'      => $slug,
-            'html'      => $html
+            'status' => 'success',
+            'message' => $message,
+            'title' => $title,
+            'html_base64_encode' => $html_base64_encode
         ];
 
         return true;
@@ -152,18 +144,13 @@ class PFManager
     {
         $page   = $this->grav['page'];
         $found  = $page->find( $route);
-        $slug   = $found->slug();
-        //$temp_slug  = explode('/', $route);
-        //$slug       = end( $temp_slug );
+        $title  = $found->title();
 
         $parameters = [];
-        $html = '';
-        
-        $parameters['breadcrumbs']  = $this->get_crumbs( $found );
-        
-        $template_file = 'printfriendly.html.twig';
+        $parameters['breadcrumbs'] = $this->get_crumbs( $found );
+
         $twig = $this->grav['twig'];
-        $html = $twig->processTemplate($template_file, ['page' => $found, 'parameters' => $parameters]);
+        $html_from_template = $twig->processTemplate('printfriendly.html.twig', ['page' => $found, 'parameters' => $parameters]);
 
         $allow_array = $this->config->get('plugins.printfriendly.tags.allowed_tags');
         $allow = '';
@@ -172,11 +159,15 @@ class PFManager
                 $allow .= '<'.$value.'>';
             }
         }
-        $html = strip_tags($html, $allow);
+        $stripped_html = strip_tags( $html_from_template, $allow );
+        
+        $html_utf8_decode = utf8_decode( $stripped_html );
+        $html_base64_encode = base64_encode( $html_utf8_decode );
 
         $ret_value = array();
-        $ret_value['slug'] = $slug;
-        $ret_value['html'] = $html;
+        $ret_value['title'] = $title;
+        $ret_value['html_base64_encode'] = $html_base64_encode;
+
         return $ret_value;
     }
 

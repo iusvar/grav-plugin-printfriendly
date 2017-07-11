@@ -1,3 +1,11 @@
+# v0.4.0
+## 07/11/2017
+
+1. [](#new)
+    * Newly added nonce features also to identify html div.
+1. [](#bugfix)
+    * The data to be printed is created only when requested
+
 # v0.3.3
 ## 07/10/2017
 

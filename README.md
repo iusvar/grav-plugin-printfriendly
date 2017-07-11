@@ -4,6 +4,8 @@
 
 `Print Friendly` is a [Grav](http://github.com/getgrav/grav) Plugin that generates a version of a [web page formatted for printing](https://en.wikipedia.org/wiki/Printer-friendly).
 
+For a demo, look at these examples in [Antimatter](http://iusvar.hostfree.pw/ef5/en/tablesorter), Learn2, [Knowledge-base](http://iusvar.hostfree.pw/knowledge/home/article00).
+
 # Installation
 
 Installing the `Print Friendly` plugin can be done in one of two ways. The GPM (Grav Package Manager) installation method enables you to quickly and easily install the plugin with a simple terminal command, while the manual method enables you to do so via a zip file.

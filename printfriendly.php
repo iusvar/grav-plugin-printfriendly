@@ -5,6 +5,7 @@ use Grav\Common\Plugin;
 use RocketTheme\Toolbox\Event\Event;
 use Grav\Common\Utils;
 use Symfony\Component\Yaml\Yaml;
+use Grav\Plugin\PFManager\PFManager;
 
 
 /**
@@ -14,9 +15,9 @@ use Symfony\Component\Yaml\Yaml;
 class PrintFriendlyPlugin extends Plugin
 {
     protected $lang;
-    
-    protected $route = "pf-manager";
     protected $uri;
+    protected $pfmanager;
+    protected $json_response = [];
 
     protected $listing = array();
 
@@ -38,6 +39,8 @@ class PrintFriendlyPlugin extends Plugin
 
     public function setting()
     {
+        require_once __DIR__ . '/classes/pfmanager.php';
+        
         $this->lang = $this->grav['language'];
         $this->uri = $this->grav['uri'];
     }
@@ -55,10 +58,14 @@ class PrintFriendlyPlugin extends Plugin
         // Enable the main event we are interested in
         $this->enable([
             'onTwigInitialized'     => ['onTwigInitialized', 0],
+            'onPageInitialized'     => ['onPageInitialized', 1001],
             'onTwigSiteVariables'   => ['onTwigSiteVariables', 0],
             'onTwigTemplatePaths'   => ['onTwigTemplatePaths', 0]
         ]);
 
+        $this->pfmanager = new PFManager($this->grav);
+        $this->pfmanager->json_response = [];
+        $this->grav['pfmanager'] = $this->pfmanager;
     }
 
 
@@ -68,6 +75,23 @@ class PrintFriendlyPlugin extends Plugin
     public function onTwigTemplatePaths()
     {
         $this->grav['twig']->twig_paths[] = __DIR__ . '/templates';
+    }
+
+
+    public function onPageInitialized()
+    {
+        $post = !empty($_POST) ? $_POST : [];
+
+        $task = !empty($post['pftask']) ? $post['pftask'] : $this->uri->param('pftask');
+
+        if ($task) {
+            $this->pfmanager->execute($task, $post);
+            if ( $this->pfmanager->json_response ) {
+                echo json_encode($this->pfmanager->json_response);
+                exit();
+            }
+        } else {
+        }
     }
 
     /**
@@ -119,9 +143,8 @@ class PrintFriendlyPlugin extends Plugin
             $this->grav['assets']->addCss('plugin://printfriendly/assets/css/font-awesome.min.css');
         }
 
-        $this->grav['assets']
-            ->add('jquery', 101)
-            ->addJs($jquery_ui_source.'jquery-ui.min.js');
+        $this->grav['assets']->addJs($jquery_ui_source.'jquery-ui.min.js');
+            
     }
 
     /**
@@ -138,34 +161,15 @@ class PrintFriendlyPlugin extends Plugin
         }
 
         $pf_bur     = $this->grav['base_url_relative'] . DS;
-        $pf_manager = $this->route.'.json' . DS;
+        $pf_manager = 'pf-manager.json' . DS;
         $pf_task    = 'pftask:pf' . DS;
         $esc_route  = 'route:'.str_replace('/','@',$route) . DS;
         
         $nonce      = Utils::getNonce('pf-form');
         $pf_nonce   = 'pf-nonce:'.$nonce;
 
-        $page       = $this->grav['page'];
-        $found      = $page->find($route);
-        $id         = $found->id();
-        $title      = $found->title();
-
-        $parameters = [];
-        $parameters['breadcrumbs']  = $this->get_crumbs( $found );
-        $html_from_template = $this->grav['twig']->processTemplate('printfriendly.html.twig', ['page' => $found, 'parameters' => $parameters]);
-
-        $allow_array = $this->config->get('plugins.printfriendly.tags.allowed_tags');
-        $allow = '';
-        foreach ($allow_array as $key => $value) {
-            if($value){
-                $allow .= '<'.$value.'>';
-            }
-        }
-        $stripped_html = strip_tags($html_from_template, $allow);
-        
-        $html_utf8_decode = utf8_decode($stripped_html);
-        $html_base64_encode = base64_encode($html_utf8_decode);
-
+        $title = '';
+        $id = Utils::getNonce($route);
         $btn_id     = "pf-".$id;
         $btn_data   = $pf_bur . $pf_manager . $pf_task . $esc_route . $pf_nonce;
 
@@ -181,7 +185,7 @@ class PrintFriendlyPlugin extends Plugin
         $btn_link .= ( !empty($icn_plugin) ? '<i class="fa '.$icn_plugin.'" aria-hidden="true"></i>&nbsp;' : '' );
         $btn_link .= ( !empty($btn_plugin) ? $btn_plugin : '' );
         $btn_link = trim($btn_link);
-            
+
         if( empty($btn_link) ){
             $icn_plugin = 'fa-print';
             $btn_link = '<i class="fa '.$icn_plugin.'" aria-hidden="true"></i>&nbsp;Print';
@@ -207,16 +211,15 @@ class PrintFriendlyPlugin extends Plugin
         $version = $package_yaml['version'];
 
         $html = '
-            <div id="dialog-'.$id.'" style="display: none;" width="100%">
+            <div id="dialog-'.$id.'" style="display: none;" title="'.($version ? $version : '').'">
                 <div id="print-'.$id.'"></div>
             </div>
-            <input id="hidden-'.$id.'" type="hidden" title="'.($version ? $version : 'Boh').'">
-            
-            <button id="' . $btn_id . '" class="printfriendly" type="button">' . $btn_link . '</button>
+
+            <button id="' . $btn_id . '" class="export" type="button" data-pf="'.$btn_data.'">' . $btn_link . '</button>
             <script>
 
-                function pfPrint(content){
-                    $("<iframe>", { name: "pf-frame", class: "pf-frame" }).appendTo("body").contents().find("body").append(content);
+                function pfPrint( html_content ){
+                    $("<iframe>", { name: "pf-frame", class: "pf-frame" }).appendTo("body").contents().find("body").append( html_content );
                     window.frames["pf-frame"].focus();
                     window.frames["pf-frame"].print();
                     setTimeout(() => { $(".pf-frame").remove(); }, 1000);
@@ -244,10 +247,8 @@ class PrintFriendlyPlugin extends Plugin
                                 text: "'.$btn_confirm.'",
                                 icon: "ui-icon-check",
                                 click: function() {
-
-                                    var content = $("#print-'.$id.'").html();
-                                    pfPrint(content);
-
+                                    var html_content = $("#print-'.$id.'").html();
+                                    pfPrint( html_content );
                                     $("#print-'.$id.'").empty();
                                     $( "div span#fa-'.$id.'" ).remove();
                                     $(this).dialog("close");
@@ -270,56 +271,69 @@ class PrintFriendlyPlugin extends Plugin
                             $( ".ui-dialog-title" ).before( "<span id=\"fa-'.$id.'\"><i class=\"fa '.$icn_plugin.'\" aria-hidden=\"true\"></i>&nbsp;</span>" );
                             $( ".ui-dialog-title" ).css("float","none");
                             $( this ).scrollTop(0);
-                        },
-                        close: function() {
-                            //$("#print-'.$id.'").delay(100).empty();
                         }
                     });
 
-                    var html_base64_encode = "'.$html_base64_encode.'";
-                    $("#hidden-'.$id.'").val(html_base64_encode);
 
                     $("#'.$btn_id.'").on("click", function () {
-                        var encoded = $("#hidden-'.$id.'").val();
-                        var decoded = atob(encoded);
-                        $("#print-'.$id.'").html(decoded);
 
-                        if( print_directly ) {
-                            var content = $("#print-'.$id.'").html();
-                            pfPrint(content);
-                            $("#print-'.$id.'").empty();
-                        } else {
-                            $("#dialog-'.$id.'").dialog("open");
+                        $("#'.$btn_id.' .'.$icn_plugin.'").removeClass(\''.$icn_plugin.'\').addClass(\'fa-spin fa-spinner\');
+                        var element = $("button#'.$btn_id.'");
+                        var url = element.attr("data-pf");
+
+                        $.ajax({
+                            url: url,
+                            dataType: "json",
+                            method: "get"
+                        }).done(function (data) {
+                            if (data.status == "success") {
+
+                                var title = data.title;
+                                $("span.ui-dialog-title").text( title );
+                                
+                                var html_base64_encode = data.html_base64_encode;
+                                var decoded = atob(html_base64_encode);
+                                $("#print-'.$id.'").html(decoded);
+                                
+                                if( print_directly ) {
+                                    var html_content = $("#print-'.$id.'").html();
+                                    pfPrint( html_content );
+                                } else {
+                                    $("#dialog-'.$id.'").attr("title", "Title");
+                                    $("#dialog-'.$id.'").dialog("open");
+                                }
+
+                            } else {
+                                custom_alert( data.message, data.title );
+                            }
+                        }).fail(function(jqXHR, textStatus, errorMsg){
+                            custom_alert( errorMsg, textStatus );
+                        }).always(function(){
+                            $("#'.$btn_id.' .fa-spin").removeClass(\'fa-spin fa-spinner\').addClass(\''.$icn_plugin.'\');
+                            element.prop( "disabled", false );
+                        });
+                    });
+                });
+
+                function custom_alert( message, title ) {
+                    if ( !title ) title = "Alert";
+                    if ( !message ) message = "No Message to Display.";
+                    $("<div></div>").html( message ).dialog({
+                        title: title,
+                        resizable: true,
+                        modal: true,
+                        buttons: {
+                            "Ok": function()  {
+                                $( this ).dialog( "close" );
+                            }
                         }
                     });
-                    
-                });
+                }
 
             </script>
             ';
 
         return $html;
-    }
-
-    protected function get_crumbs( $page )
-    {
-        $current = $page;
-        $hierarchy = array();
-        while ($current && !$current->root()) {
-            $hierarchy[$current->url()] = $current;
-            $current = $current->parent();
-        }
-        $home = $this->grav['pages']->dispatch('/');
-        if ($home && !array_key_exists($home->url(), $hierarchy)) {
-            $hierarchy[] = $home;
-        }
-        $elements = array_reverse($hierarchy);
-        $crumbs = array();
-        foreach ($elements as $key => $crumb) {
-            $crumbs[] = [ 'route' => $crumb->route(), 'title' => $crumb->title() ];
-        }
-
-        return $crumbs;
     }
 
 }
