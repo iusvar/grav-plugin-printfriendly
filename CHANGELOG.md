@@ -1,5 +1,5 @@
-# v0.x.x
-## xx/xx/2017
+# v0.4.0
+## 07/13/2017
 
 1. [](#new)
     * Newly added nonce features also to identify html div.
