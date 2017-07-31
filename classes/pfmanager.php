@@ -110,7 +110,9 @@ class PFManager
 
     protected function taskPf()
     {
-        $route  = $this->grav['uri']->param('route') ;
+		// Laurent Ongaro Hack : fix issue when parameters separator is ";"
+		// $route  = $this->grav['uri']->param('route') ;
+        $route  = $this->post['route'];
         $route  = str_replace('@','/',$route);
 
         try {

@@ -160,13 +160,14 @@ class PrintFriendlyPlugin extends Plugin
             return $this->lang->translate('PLUGIN_PF.ERROR');
         }
 
-        $pf_bur     = $this->grav['base_url_relative'] . DS;
-        $pf_manager = 'pf-manager.json' . DS;
-        $pf_task    = 'pftask:pf' . DS;
-        $esc_route  = 'route:'.str_replace('/','@',$route) . DS;
+		// Laurent Ongaro Hack : fix issue when parameters separator is ";"
+        $pf_bur     = $this->grav['base_url_relative'] ;
+        $pf_manager = 'pf-manager.json' ;
+        $pf_task    = 'pftask=pf' ;
+        $esc_route  = 'route='.str_replace('/','@',$route) ;
         
         $nonce      = Utils::getNonce('pf-form');
-        $pf_nonce   = 'pf-nonce:'.$nonce;
+        $pf_nonce   = 'pf-nonce='.$nonce;
 
         $title = '';
         $id = Utils::getNonce($route);
@@ -279,12 +280,15 @@ class PrintFriendlyPlugin extends Plugin
 
                         $("#'.$btn_id.' .'.$icn_plugin.'").removeClass(\''.$icn_plugin.'\').addClass(\'fa-spin fa-spinner\');
                         var element = $("button#'.$btn_id.'");
-                        var url = element.attr("data-pf");
+						// Laurent Ongaro Hack : fix issue when parameters separator is ";"
+                        var url = "'.$pf_bur . $pf_manager.'";
+                        var data = "'.$pf_task.'&'.$esc_route.'&'.$pf_nonce.'";
 
                         $.ajax({
                             url: url,
                             dataType: "json",
-                            method: "get"
+                            method: "post", 
+                            data: data
                         }).done(function (data) {
                             if (data.status == "success") {
 
