@@ -1,3 +1,10 @@
+# v0.5.0
+## 08/03/2017
+
+1. [](#improved)
+    * Added parameter param_sep in url construction.
+    * New site with working [demo](http://iusvar.alwaysdata.net/grav/). [Snappygrav](https://github.com/iusvar/grav-plugin-snappygrav)'s demo also works: On the Alwaysdata hosting server, wkhtmltopdf works wonderfully.
+
 # v0.4.0
 ## 07/13/2017
 

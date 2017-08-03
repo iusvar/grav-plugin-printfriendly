@@ -1,13 +1,13 @@
 name: Print Friendly
-version: 0.4.0
+version: 0.5.0
 description: Create a web page formatted for printing.
 icon: print
 author:
   name: Severo Iuliano
   email: severoiuliano@gmail.com
-  url: http://iusvar.hostfree.pw/
+  url: http://iusvar.alwaysdata.net/grav/
 homepage: https://github.com/iusvar/grav-plugin-printfriendly
-demo: http://iusvar.hostfree.pw/
+demo: http://iusvar.alwaysdata.net/grav/
 keywords: grav, plugin, printfriendly
 bugs: https://github.com/iusvar/grav-plugin-printfriendly/issues
 readme: https://github.com/iusvar/grav-plugin-printfriendly/blob/master/README.md

@@ -160,13 +160,15 @@ class PrintFriendlyPlugin extends Plugin
             return $this->lang->translate('PLUGIN_PF.ERROR');
         }
 
+        $param_sep = $this->grav['config']->get('system.param_sep', ':');
+
         $pf_bur     = $this->grav['base_url_relative'] . DS;
         $pf_manager = 'pf-manager.json' . DS;
-        $pf_task    = 'pftask:pf' . DS;
-        $esc_route  = 'route:'.str_replace('/','@',$route) . DS;
+        $pf_task    = 'pftask' . $param_sep . 'pf' . DS;
+        $esc_route  = 'route' . $param_sep . str_replace('/', '@', $route) . DS;
         
         $nonce      = Utils::getNonce('pf-form');
-        $pf_nonce   = 'pf-nonce:'.$nonce;
+        $pf_nonce   = 'pf-nonce' . $param_sep . $nonce;
 
         $title = '';
         $id = Utils::getNonce($route);

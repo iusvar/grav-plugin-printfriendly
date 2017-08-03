@@ -110,7 +110,7 @@ class PFManager
 
     protected function taskPf()
     {
-        $route  = $this->grav['uri']->param('route') ;
+        $route  = $this->grav['uri']->param('route');
         $route  = str_replace('@','/',$route);
 
         try {
