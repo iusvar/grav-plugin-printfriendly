@@ -293,9 +293,10 @@ class PrintFriendlyPlugin extends Plugin
                                 var title = data.title;
                                 $("span.ui-dialog-title").text( title );
                                 
-                                var html_base64_encode = data.html_base64_encode;
-                                var decoded = atob(html_base64_encode);
-                                $("#print-'.$id.'").html(decoded);
+                                //var html_base64_encode = data.html_base64_encode;
+                                //var decoded = atob(html_base64_encode);
+                                var stripped_html = data.stripped_html;
+                                $("#print-'.$id.'").html(stripped_html);
                                 
                                 if( print_directly ) {
                                     var html_content = $("#print-'.$id.'").html();
