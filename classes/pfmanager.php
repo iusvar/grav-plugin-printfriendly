@@ -116,10 +116,7 @@ class PFManager
         try {
             $ret_value  = $this->makeDocument($route);
             $title = $ret_value['title'];
-            //$html_base64_encode = $ret_value['html_base64_encode'];
-
-            $stripped_html = $ret_value['stripped_html'];
-            
+            $html_base64_encode = $ret_value['html_base64_encode'];
         } catch (\Exception $e) {
             $this->json_response = [
                 'status' => 'error',
@@ -136,9 +133,7 @@ class PFManager
             'status' => 'success',
             'message' => $message,
             'title' => $title,
-            //'html_base64_encode' => $html_base64_encode,
-            
-            'stripped_html' => $stripped_html
+            'html_base64_encode' => $html_base64_encode
         ];
 
         return true;
@@ -165,13 +160,11 @@ class PFManager
             }
         }
         $stripped_html = strip_tags( $html_from_template, $allow );
-        //$html_utf8_decode = utf8_decode( $stripped_html );
-        //$html_base64_encode = base64_encode( $html_utf8_decode );
+        $html_base64_encode = base64_encode( $stripped_html );
 
         $ret_value = array();
         $ret_value['title'] = $title;
-        //$ret_value['html_base64_encode'] = $html_base64_encode;
-        $ret_value['stripped_html'] = $stripped_html;
+        $ret_value['html_base64_encode'] = $html_base64_encode;
 
         return $ret_value;
     }

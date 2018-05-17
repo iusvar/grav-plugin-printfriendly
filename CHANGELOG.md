@@ -1,3 +1,9 @@
+# v0.7.0
+## 05/17/2018
+
+1. [](#improved)
+    * Restored coding with base64.
+
 # v0.6.0
 ## 05/15/2018
 

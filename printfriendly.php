@@ -144,7 +144,6 @@ class PrintFriendlyPlugin extends Plugin
         }
 
         $this->grav['assets']->addJs($jquery_ui_source.'jquery-ui.min.js');
-            
     }
 
     /**
@@ -293,10 +292,9 @@ class PrintFriendlyPlugin extends Plugin
                                 var title = data.title;
                                 $("span.ui-dialog-title").text( title );
                                 
-                                //var html_base64_encode = data.html_base64_encode;
-                                //var decoded = atob(html_base64_encode);
-                                var stripped_html = data.stripped_html;
-                                $("#print-'.$id.'").html(stripped_html);
+                                var html_base64_encode = data.html_base64_encode;
+                                var decoded = decodeURIComponent(escape(window.atob( html_base64_encode )))
+                                $("#print-'.$id.'").html(decoded);
                                 
                                 if( print_directly ) {
                                     var html_content = $("#print-'.$id.'").html();
