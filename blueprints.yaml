@@ -1,5 +1,5 @@
 name: Print Friendly
-version: 0.7.0
+version: 0.7.1
 description: Create a web page formatted for printing.
 icon: print
 author:
@@ -310,7 +310,7 @@ form:
             window.width:
               type: text
               size: x-small
-              append: %
+              append: '%'
               label: PLUGIN_PF.WINDOW.WIDTH
               help: PLUGIN_PF.WINDOW.WIDTH_HELP
               default: 50
@@ -321,7 +321,7 @@ form:
             window.height:
               type: text
               size: x-small
-              append: %
+              append: '%'
               label: PLUGIN_PF.WINDOW.HEIGHT
               help: PLUGIN_PF.WINDOW.HEIGHT_HELP
               default: 40

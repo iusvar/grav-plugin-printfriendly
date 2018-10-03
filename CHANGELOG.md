@@ -1,3 +1,9 @@
+# v0.7.1
+## 99/99/2018
+
+1. [](#bugfix)
+    * [#9](https://github.com/iusvar/grav-plugin-printfriendly/issues/9) Fix the reserved indicator "%" cannot start a plain scalar.
+    
 # v0.7.0
 ## 05/17/2018
 
