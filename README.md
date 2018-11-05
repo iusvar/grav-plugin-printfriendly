@@ -73,6 +73,10 @@ To use this plugin, you simplest way to display the link to print is to use the 
 ```
 {{ printfriendly(page.route) }}
 ```
+or, in case of Autoescape variables set as yes in the system.yaml,
+```
+{{ printfriendly(page.route)|raw }}
+```
 
 This will use the current page's route as the unique identifier.
 

@@ -1,3 +1,9 @@
+# v0.7.2
+## 11/05/2018
+
+1. [](#bugfix)
+    * Add raw filter in the twig function.
+    
 # v0.7.1
 ## 11/05/2018
 
