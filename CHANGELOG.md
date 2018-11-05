@@ -3,7 +3,7 @@
 
 1. [](#bugfix)
     * [#9](https://github.com/iusvar/grav-plugin-printfriendly/issues/9) Fix the reserved indicator "%" that cannot start a plain scalar.
-    * Make the plugin work with the automatic auto-exclusion of Twig activated and then with the Quark theme.
+    * Make the plugin to work with Twig auto-escaping turned on and then with the Quark theme.
     
 # v0.7.0
 ## 05/17/2018
