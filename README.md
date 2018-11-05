@@ -4,8 +4,6 @@
 
 `Print Friendly` is a [Grav](http://github.com/getgrav/grav) Plugin that generates a version of a [web page formatted for printing](https://en.wikipedia.org/wiki/Printer-friendly).
 
-For a demo, look at these examples in [Antimatter](http://iusvar.hostfree.pw/ef5/en/tablesorter), Learn2, [Knowledge-base](http://iusvar.hostfree.pw/knowledge/home/article00).
-
 # Installation
 
 Installing the `Print Friendly` plugin can be done in one of two ways. The GPM (Grav Package Manager) installation method enables you to quickly and easily install the plugin with a simple terminal command, while the manual method enables you to do so via a zip file.
@@ -56,14 +54,16 @@ Note: Any changes you have made to any of the files listed under this directory 
 
 The plugin was tested in the following updated environments:
 
-* Grav v1.3.0-rc.5
-* Admin v1.5.0-rc.4
-* Antimatter v2.1.1
+* Grav v1.5.3
+* Admin v1.8.12
+* Quark v1.2.2
+* Antimatter v2.1.2
 * Learn2 v1.6.3
 * Knowledge Base v1.3.3
 
-For now the `printfriendly` plugin as been tested for three types of sites:
+For now the `printfriendly` plugin as been tested for four types of sites:
 
+* [Blog Site](https://github.com/getgrav/grav-skeleton-blog-site) skeleton with [Quark](https://github.com/getgrav/grav-theme-quark) theme by [Grav Team](https://getgrav.org/about)
 * [Blog Site](https://github.com/getgrav/grav-skeleton-blog-site) skeleton with [Antimatter](https://github.com/getgrav/grav-theme-antimatter) theme by [Grav Team](https://getgrav.org/about)
 * [RTFM Site](https://github.com/getgrav/grav-skeleton-rtfm-site) skeleton with [Learn2](https://github.com/getgrav/grav-theme-learn2) theme by [Grav Team](https://getgrav.org/about)
 * [Knowledge Base](https://github.com/Perlkonig/grav-skeleton-knowledge-base) skeleton with [Knowledge Base](https://github.com/Perlkonig/grav-theme-knowledge-base) theme by [Aaron Dalton](https://github.com/Perlkonig)
